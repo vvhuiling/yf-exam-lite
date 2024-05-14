@@ -2,14 +2,18 @@ server:
   port: 8101
 
 spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
   application:
     name: yf-exam
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.11.251:10925/zs_exam?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/bool-exam?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: Root@123456
+    password:
 
   # Redis配置
   redis:

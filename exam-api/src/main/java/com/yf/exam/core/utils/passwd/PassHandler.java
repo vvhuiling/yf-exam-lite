@@ -23,8 +23,8 @@ public class PassHandler {
 	 * @return
 	 */
 	public static boolean checkPass(String inputPass , String salt , String pass){
-		String pwdMd5 = MD5Util.MD5(inputPass);
-		return MD5Util.MD5(pwdMd5 + salt).equals(pass);
+		String pwdMd5 = MD5Util.MD5(salt+inputPass);
+		return pwdMd5.equals(pass);
 	}
 	
 	
@@ -40,7 +40,7 @@ public class PassHandler {
 		//产生一个6位数的随机码
 		String salt = RandomStringUtils.randomAlphabetic(6);
 		//加密后的密码
-		String encryptPassword = MD5Util.MD5(MD5Util.MD5(inputPass)+salt);
+		String encryptPassword = MD5Util.MD5(salt+inputPass);
 		//返回对象
 		return new PassInfo(salt,encryptPassword);
 	}

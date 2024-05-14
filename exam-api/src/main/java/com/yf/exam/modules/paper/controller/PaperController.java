@@ -188,8 +188,8 @@ public class PaperController extends BaseController {
     @ApiOperation(value = "试卷详情")
     @RequestMapping(value = "/paper-result", method = { RequestMethod.POST})
     public ApiRest<ExamResultRespDTO> paperResult(@RequestBody BaseIdReqDTO reqDTO) {
-        //根据ID删除
         ExamResultRespDTO respDTO = baseService.paperResult(reqDTO.getId());
+
         return super.success(respDTO);
     }
 

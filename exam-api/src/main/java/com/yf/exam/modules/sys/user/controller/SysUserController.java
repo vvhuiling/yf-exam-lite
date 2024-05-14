@@ -56,7 +56,7 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 用户登录
+     * 用户登出
      * @return
      */
     @CrossOrigin

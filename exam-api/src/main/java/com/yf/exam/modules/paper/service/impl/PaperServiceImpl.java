@@ -22,7 +22,6 @@ import com.yf.exam.modules.paper.entity.Paper;
 import com.yf.exam.modules.paper.entity.PaperQu;
 import com.yf.exam.modules.paper.entity.PaperQuAnswer;
 import com.yf.exam.modules.paper.entity.PaperRule;
-import com.yf.exam.modules.paper.entity.PaperV;
 import com.yf.exam.modules.paper.enums.PaperState;
 import com.yf.exam.modules.paper.mapper.PaperMapper;
 import com.yf.exam.modules.paper.service.PaperQuAnswerService;
@@ -37,6 +36,8 @@ import com.yf.exam.modules.qu.enums.QuType;
 import com.yf.exam.modules.qu.service.QuAnswerService;
 import com.yf.exam.modules.qu.service.QuService;
 import com.yf.exam.modules.sys.user.service.SysUserRoleService;
+import com.yf.exam.modules.sys.user.service.SysUserService;
+import com.yf.exam.modules.sys.user.entity.SysUser;
 import com.yf.exam.modules.user.service.UserWrongBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,8 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+
+    @Autowired SysUserService sysUserService;
 
     @Autowired
     private PaperRuleService paperRuleService;
@@ -101,7 +104,9 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
             ,"Y","Z"
     });
 
-
+    /**
+     * 根据规则选题
+     */
     @Override
     public String createPaper(String userId, String examId) {
 
@@ -167,8 +172,13 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         ExamResultRespDTO respDTO = new ExamResultRespDTO();
 
         // 试题基本信息
-        PaperV paper = paperVService.getById(paperId);
+        Paper paper = paperService.getById(paperId);
         BeanMapper.copy(paper, respDTO);
+
+
+        SysUser sysUser = sysUserService.getById(paper.getUserId());
+        respDTO.setUserName(sysUser.getUserName());
+        respDTO.setRealName(sysUser.getRealName());
 
         List<PaperQuDetailDTO> quList = paperQuService.listForPaperResult(paperId);
         respDTO.setQuList(quList);
